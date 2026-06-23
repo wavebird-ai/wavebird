@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wavebird Browser SDK Example</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f1e7;
+        --panel: #fffaf2;
+        --border: #d7cbb5;
+        --accent: #8f4b24;
+        --accent-strong: #5d2f12;
+        --text: #21170f;
+        --muted: #6d5849;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(217, 162, 98, 0.28), transparent 30%),
+          linear-gradient(180deg, #f9f4ea 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 20px 56px;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-family: "IBM Plex Serif", Georgia, serif;
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+
+      p {
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      @media (min-width: 860px) {
+        .grid {
+          grid-template-columns: 1.1fr 0.9fr;
+          align-items: start;
+        }
+      }
+
+      .panel {
+        background: rgba(255, 250, 242, 0.95);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 18px 40px rgba(74, 44, 20, 0.08);
+      }
+
+      label {
+        display: block;
+        font-size: 0.92rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      input,
+      textarea,
+      button {
+        width: 100%;
+        font: inherit;
+      }
+
+      input,
+      textarea {
+        margin-top: 6px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: #fffdfa;
+      }
+
+      textarea {
+        min-height: 130px;
+        resize: vertical;
+      }
+
+      button {
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 16px;
+        cursor: pointer;
+        background: var(--accent);
+        color: white;
+        font-weight: 600;
+      }
+
+      button.secondary {
+        background: #ece0cf;
+        color: var(--accent-strong);
+      }
+
+      .button-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .creative {
+        min-height: 220px;
+        display: grid;
+        place-items: center;
+        border: 1px dashed var(--border);
+        border-radius: 18px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .creative img,
+      .creative video {
+        max-width: 100%;
+        display: block;
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        color: var(--accent-strong);
+      }
+
+      .log {
+        max-height: 320px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Wavebird Browser SDK Example</h1>
+      <p>
+        Standalone browser example for the Wavebird SDK. It creates a job, waits for a decision, renders the
+        returned creative, and sends wrapper beacons without any build tooling.
+      </p>
+      <p>
+        This HTML example uses npm package imports. Run it through tooling that resolves bare module specifiers,
+        such as Vite or another ESM-aware dev server.
+      </p>
+
+      <div class="grid">
+        <section class="panel">
+          <form id="job-form">
+            <label>
+              Wavebird API Base URL
+              <input id="base-url" value="https://api.wavebird.ai" />
+            </label>
+            <label>
+              Wrapper API Key
+              <input id="api-key" type="password" value="" autocomplete="off" spellcheck="false" />
+            </label>
+            <label>
+              Prompt
+              <textarea id="prompt">I want a travel deal for a weekend trip.</textarea>
+            </label>
+            <button type="submit">Create Job + Fetch Decision</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Creative</h2>
+          <div id="creative" class="creative">
+            <p>No decision yet.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel" style="margin-top: 18px">
+        <h2>Session State</h2>
+        <pre id="state">{}</pre>
+      </section>
+
+      <section class="panel" style="margin-top: 18px">
+        <h2>Beacon Log</h2>
+        <div class="log">
+          <pre id="log">Ready.</pre>
+        </div>
+      </section>
+    </main>
+
+    <script type="module">
+      import { WavebirdClient } from "wavebird/browser";
+      import { mountWavebirdAd } from "wavebird/mount";
+
+      const form = document.getElementById("job-form");
+      const stateEl = document.getElementById("state");
+      const creativeEl = document.getElementById("creative");
+      const logEl = document.getElementById("log");
+
+      let currentState = {
+        client: null,
+        job: null,
+        decision: null,
+      };
+      let unmountCurrentAd = () => {};
+
+      function setState(next) {
+        currentState = { ...currentState, ...next };
+        stateEl.textContent = JSON.stringify(
+          {
+            job: currentState.job,
+            decision: currentState.decision,
+          },
+          null,
+          2
+        );
+      }
+
+      function log(message, payload) {
+        const line = `[${new Date().toISOString()}] ${message}`;
+        logEl.textContent = `${line}${payload ? `\n${JSON.stringify(payload, null, 2)}` : ""}\n\n${logEl.textContent}`;
+      }
+
+      function setCreativeMessage(message) {
+        creativeEl.replaceChildren();
+        const paragraph = document.createElement("p");
+        paragraph.textContent = message;
+        creativeEl.appendChild(paragraph);
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const client = new WavebirdClient({
+          baseUrl: document.getElementById("base-url").value,
+          getApiKey: () => document.getElementById("api-key").value,
+          publisher: {
+            app_name: "MyAIChatApp",
+            app_domain: "mychatapp.com",
+            categories: ["IAB19"],
+          },
+          decisionDelivery: "auto",
+          options: {
+            onError: (error) => log("SDK fail-silent error observed", { message: String(error) }),
+          },
+        });
+
+        setState({ client, job: null, decision: null });
+        setCreativeMessage("Waiting for decision...");
+        log("Creating job");
+
+        const job = await client.createJob({
+          job_type: "chat",
+          predicted_latency_ms: 4_000,
+          context: {
+            topic: document.getElementById("prompt").value,
+          },
+          slots_requested: 1,
+          routing: {
+            preferred_partner_id: "ssp_local_1",
+            candidate_partner_ids: ["ssp_local_1"],
+          },
+        });
+
+        if (!job?.slot_ids[0]) {
+          log("Job creation failed silently");
+          return;
+        }
+
+        await client.reportGeneration(job.job_id, "started", { model_id: "gpt-4o-mini" });
+        const decision = await client.getDecision(job.slot_ids[0]);
+        await client.reportGeneration(job.job_id, "finished", {
+          generation_id: `gen-${job.job_id}`,
+          model_id: "gpt-4o-mini",
+        });
+
+        setState({ job, decision });
+        unmountCurrentAd();
+        if (decision.fill === true) {
+          unmountCurrentAd = mountWavebirdAd({
+            target: creativeEl,
+            decision,
+            label: "Sponsored",
+            sendBeacon: async (request) => {
+              const response = await client.sendBeacon({
+                ...request,
+                measurements: {
+                  viewport: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                  },
+                },
+              });
+              log(`Beacon sent: ${request.beacon_type}`, response);
+              return response;
+            },
+            onError: (error) => log("Widget beacon error", { message: String(error) }),
+          });
+        } else {
+          setCreativeMessage("No fill or pending decision.");
+          unmountCurrentAd = () => {};
+        }
+        log("Decision received", decision);
+      });
+    </script>
+  </body>
+</html>
+
+

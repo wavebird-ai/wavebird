@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.tmp/
+.npm-cache-audit/
+coverage/
+*.log
+*.tgz
+.env
+.env.*
+.DS_Store

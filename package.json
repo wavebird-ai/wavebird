@@ -1,0 +1,128 @@
+{
+  "name": "wavebird",
+  "private": false,
+  "type": "module",
+  "version": "0.1.0",
+  "sideEffects": false,
+  "license": "MIT",
+  "description": "Advanced Wavebird SDK thin wrapper over the API-first integration surface.",
+  "keywords": [
+    "wavebird",
+    "advertising",
+    "ads",
+    "ai ads",
+    "llm monetization",
+    "genai",
+    "genai advertising",
+    "genai ads",
+    "compute-sponsoring",
+    "ad sdk",
+    "ad-api",
+    "openrtb",
+    "ai monetization",
+    "monetization",
+    "llm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wavebird-ai/wavebird.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wavebird-ai/wavebird/issues"
+  },
+  "homepage": "https://github.com/wavebird-ai/wavebird#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "main": "./dist/sdk/src/index.js",
+  "types": "./dist/sdk/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/sdk/src/index.d.ts",
+      "browser": "./dist/sdk/src/browser.js",
+      "import": "./dist/sdk/src/index.js",
+      "default": "./dist/sdk/src/index.js"
+    },
+    "./react": {
+      "types": "./dist/sdk/src/components/WavebirdAd.d.ts",
+      "import": "./dist/sdk/src/components/WavebirdAd.js",
+      "default": "./dist/sdk/src/components/WavebirdAd.js"
+    },
+    "./mount": {
+      "types": "./dist/sdk/src/components/mountWavebirdAd.d.ts",
+      "import": "./dist/sdk/src/components/mountWavebirdAd.js",
+      "default": "./dist/sdk/src/components/mountWavebirdAd.js"
+    },
+    "./consent": {
+      "types": "./dist/sdk/src/consent/index.d.ts",
+      "import": "./dist/sdk/src/consent/index.js",
+      "default": "./dist/sdk/src/consent/index.js"
+    },
+    "./consent/react": {
+      "types": "./dist/sdk/src/consent/react.d.ts",
+      "import": "./dist/sdk/src/consent/react.js",
+      "default": "./dist/sdk/src/consent/react.js"
+    },
+    "./browser": {
+      "types": "./dist/sdk/src/browser.d.ts",
+      "import": "./dist/sdk/src/browser.js",
+      "default": "./dist/sdk/src/browser.js"
+    },
+    "./public-contracts": {
+      "types": "./dist/sdk/src/public_contracts.d.ts",
+      "import": "./dist/sdk/src/public_contracts.js",
+      "default": "./dist/sdk/src/public_contracts.js"
+    },
+    "./public-contracts/wrapper": {
+      "types": "./dist/sdk/src/public_contracts/wrapper.d.ts",
+      "import": "./dist/sdk/src/public_contracts/wrapper.js",
+      "default": "./dist/sdk/src/public_contracts/wrapper.js"
+    },
+    "./public-contracts/ssp": {
+      "types": "./dist/sdk/src/public_contracts/ssp.d.ts",
+      "import": "./dist/sdk/src/public_contracts/ssp.js",
+      "default": "./dist/sdk/src/public_contracts/ssp.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "dist/sdk/src"
+  ],
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "esbuild": "^0.27.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "size": "node ./scripts/measure-size.mjs",
+    "size-check": "node ./scripts/measure-size.mjs --check",
+    "test": "node ./tests/sdk_suite.runner.mjs",
+    "test:artifact": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/package-smoke.ps1",
+    "test:examples": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/example-smoke.ps1",
+    "prepack": "npm run build",
+    "prepublishOnly": "node ./scripts/prepublish.mjs"
+  }
+}
