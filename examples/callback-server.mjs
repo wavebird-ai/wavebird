@@ -77,7 +77,7 @@ async function main() {
     });
 
     process.stdout.write(`Created callback job: ${JSON.stringify(job)}\n`);
-    process.stdout.write("Keep this process running until Wavebird delivers the decision callback.\n");
+    process.stdout.write("Keep this process running until wavebird delivers the decision callback.\n");
   } catch (error) {
     process.stderr.write(`Callback example failed: ${String(error)}\n`);
     process.exitCode = 1;
@@ -85,4 +85,3 @@ async function main() {
 }
 
 void main();
-

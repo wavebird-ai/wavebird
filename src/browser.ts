@@ -3,10 +3,10 @@ import { WavebirdSdkError as ExportedWavebirdSdkError, WavebirdSdkErrorCode as E
 
 warnSdkDeprecation(
   "sdkAdvancedCompatibility",
-  "wavebird is now an advanced compatibility layer. For most integrations use the Wavebird Script Tag at https://wavebird.ai/wavebird.js or the REST API at https://api.wavebird.ai/v1/*. Deprecated helpers such as resolveAdTimingPlan remain exported for compatibility."
+  "wavebird is now an advanced compatibility layer. For most integrations use the wavebird Script Tag at https://wavebird.ai/wavebird.js or the REST API at https://api.wavebird.ai/v1/*. Deprecated helpers such as resolveAdTimingPlan remain exported for compatibility."
 );
 
-/** Browser entrypoint for the CSL SDK package. */
+/** Browser entrypoint for the wavebird SDK package. */
 export { WavebirdClient, type WavebirdClientOptions } from "./browser-client.js";
 export { normalizeWavebirdPlacement } from "./placement.js";
 export { resolveAdTimingPlan } from "./timing.js";

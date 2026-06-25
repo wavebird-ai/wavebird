@@ -17,13 +17,13 @@ type ExpressLikeResponse = {
 
 type NextFunction = () => void;
 
-export type WavebirdMiddlewareState = {
+export type CslMiddlewareState = {
   job_id: string | null;
   slot_id: string | null;
   decision: DecisionResponse | null;
 };
 
-export function createWavebirdExpressMiddleware(config: {
+export function createCslExpressMiddleware(config: {
   baseUrl: string;
   apiKey: string;
   createJobRequest?: (req: ExpressLikeRequest) => JobRequest;
@@ -34,7 +34,7 @@ export function createWavebirdExpressMiddleware(config: {
     decisionDelivery: "auto",
   });
 
-  return async function wavebirdMiddleware(
+  return async function cslMiddleware(
     req: ExpressLikeRequest,
     res: ExpressLikeResponse,
     next: NextFunction
@@ -79,12 +79,12 @@ export function createWavebirdExpressMiddleware(config: {
       });
     }
 
-    const state: WavebirdMiddlewareState = {
+    const state: CslMiddlewareState = {
       job_id: acceptedJob?.job_id ?? null,
       slot_id: acceptedJob?.slot_ids[0] ?? null,
       decision,
     };
-    res.locals.wavebird = state;
+    res.locals.csl = state;
 
     res.on("finish", () => {
       if (!decision || decision.fill !== true) {
@@ -101,4 +101,3 @@ export function createWavebirdExpressMiddleware(config: {
     next();
   };
 }
-

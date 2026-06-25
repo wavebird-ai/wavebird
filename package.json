@@ -2,10 +2,10 @@
   "name": "wavebird",
   "private": false,
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "sideEffects": false,
   "license": "MIT",
-  "description": "Advanced Wavebird SDK thin wrapper over the API-first integration surface.",
+  "description": "TypeScript SDK for requesting, rendering, and tracking ads on AI surfaces with wavebird.",
   "keywords": [
     "wavebird",
     "advertising",
@@ -98,7 +98,7 @@
     "@types/node": "^26.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "esbuild": "^0.27.3",
+    "esbuild": "^0.28.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.4.5"

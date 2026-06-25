@@ -28,7 +28,7 @@ import type { MountWavebirdAdOptions } from "./types.js";
 function warnMountDeprecation(): void {
   warnSdkDeprecation(
     "mountWavebirdAd",
-    "mountWavebirdAd is deprecated. Prefer the Wavebird Script Tag for browser rendering; this helper remains for legacy compatibility."
+    "mountWavebirdAd is deprecated. Prefer the wavebird Script Tag for browser rendering; this helper remains for legacy compatibility."
   );
 }
 
@@ -234,7 +234,7 @@ function mountRenderedWavebirdAd(options: MountWavebirdAdOptions): () => void {
 }
 
 /**
- * @deprecated Prefer the Wavebird Script Tag for browser rendering. This helper remains for legacy compatibility only.
+ * @deprecated Prefer the wavebird Script Tag for browser rendering. This helper remains for legacy compatibility only.
  */
 export function mountWavebirdAd(options: MountWavebirdAdOptions): () => void {
   warnMountDeprecation();

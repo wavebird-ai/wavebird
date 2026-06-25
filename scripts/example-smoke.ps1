@@ -190,8 +190,8 @@ try {
 
   $packageNodeSource = Get-Content -LiteralPath $packageNodeSourcePath -Raw
   $packageNodeSmokeSource = $packageNodeSource.Replace(
-    'console.error("Wavebird job creation returned null.");',
-    'console.log("Wavebird job creation returned null.");'
+    'console.error("wavebird job creation returned null.");',
+    'console.log("wavebird job creation returned null.");'
   )
   $packageBrowserSource = Get-Content -LiteralPath $packageBrowserSourcePath -Raw
   $packageBrowserSmokeSource = $packageBrowserSource.Replace(
@@ -220,7 +220,7 @@ try {
     if ($packageNodeStderr.Trim().Length -gt 0) {
       throw "package node example wrote unexpected stderr: $packageNodeStderr"
     }
-    if ($packageNodeOutput -notmatch "Wavebird job creation returned null\.") {
+    if ($packageNodeOutput -notmatch "wavebird job creation returned null\.") {
       throw "package node example did not reach the expected fail-silent smoke path"
     }
 

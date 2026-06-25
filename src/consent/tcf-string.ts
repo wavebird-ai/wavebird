@@ -79,7 +79,7 @@ function parseJsonSegment<T>(segment: string): T | null {
 }
 
 /**
- * Parses legacy Wavebird-local beta consent strings so older test/sandbox records can be inspected.
+ * Parses legacy wavebird-local beta consent strings so older test/sandbox records can be inspected.
  * This does not parse arbitrary IAB TC strings and must not be used as CMP output.
  */
 export function parseTcfString(value: string): ParsedWavebirdTcfString | null {

@@ -26,7 +26,7 @@ function removeSourceMaps(targetRoot) {
 if (!tscBin) {
   console.error(
     "ERROR: typescript not found in node_modules.\n" +
-      "Run 'npm install' in the SDK root."
+      "Run 'npm install' in the SDK root/."
   );
   process.exit(1);
 }
@@ -45,5 +45,3 @@ if (result.status !== 0) {
 if (existsSync(distRoot)) {
   removeSourceMaps(distRoot);
 }
-
-

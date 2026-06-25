@@ -22,9 +22,8 @@ const job = await client.createJob({
 });
 
 if (!job?.slot_ids[0]) {
-  console.error("Wavebird job creation returned null.");
+  console.error("wavebird job creation returned null.");
 } else {
   const decision = await client.getDecision(job.slot_ids[0]);
   console.log(decision);
 }
-

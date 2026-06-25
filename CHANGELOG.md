@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Wavebird SDK will be documented in this file.
+All notable changes to the wavebird SDK will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,13 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 - `wavebird` is now positioned as an advanced compatibility layer. For
-  most integrations, Wavebird now recommends the Script Tag at
+  most integrations, wavebird now recommends the Script Tag at
   `https://wavebird.ai/wavebird.js` or direct REST API usage at
   `https://api.wavebird.ai/v1/*`.
 - `resolveAdTimingPlan()` is deprecated. Timing policy now belongs server-side
   and the helper remains exported only for Stage 1 compatibility.
 - `mountWavebirdAd()` is deprecated. New browser integrations should use the
-  Wavebird Script Tag instead of the legacy vanilla mounting helper.
+  wavebird Script Tag instead of the legacy vanilla mounting helper.
 
 ### Versioning Policy
 - Breaking changes are explicitly labeled in this changelog, including before
@@ -40,10 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   React and vanilla kept as rendering variants instead of standalone paths.
 - Admin and operator observability contracts are excluded from the first public
   SDK package surface.
-- The root `WavebirdClient` now behaves as a thin wrapper over the canonical v1
-  surface: `POST /v1/jobs`, `GET /v1/decisions/{slot_id}`,
-  `POST /v1/jobs/{job_id}/generation/{event}`, and `POST /v1/beacons` when the
-  canonical request can represent the existing SDK call.
+- The root `WavebirdClient` now targets the canonical v1 surface:
+  `POST /v1/jobs`, `GET /v1/decisions/{slot_id}`,
+  `POST /v1/jobs/{job_id}/generation/{event}`, and `POST /v1/beacons`, while
+  preserving package-level control over requests, decisions, rendering helpers,
+  and beacon reporting.
 - Deprecated surfaces now warn once per process: the SDK entry warns that it is
   an advanced compatibility layer, and `wavebird/mount` warns that
   `mountWavebirdAd()` is deprecated.
@@ -68,4 +69,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New CI job `sdk-publish-check` verifies `prepublishOnly` and `npm pack` on every push.
 - `.gitignore` no longer accidentally ignores `.env.example` files.
 - `@types/react` and `@types/react-dom` moved to `devDependencies` in the workspace root.
-

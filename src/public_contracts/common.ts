@@ -1,5 +1,5 @@
 /**
- * Canonical version-string shape used by all public CSL contracts.
+ * Canonical version-string shape used by all public wavebird contracts.
  */
 export type PublicContractVersion = `csl_${string}/v${number}`;
 
@@ -121,7 +121,7 @@ export const PUBLIC_SLOT_MODES = ["clip", "banner", "native"] as const;
 export type PublicSlotMode = (typeof PUBLIC_SLOT_MODES)[number];
 
 /**
- * Structured native creative assets used by CSL and SSP-facing contracts.
+ * Structured native creative assets used by wavebird and SSP-facing contracts.
  */
 export type PublicNativeCreativeAssets = {
   title: string;
@@ -216,7 +216,7 @@ export type PublicGenerationId = string;
 export type PublicDecisionId = string;
 
 /**
- * Join key shared between CSL and an SSP for a slot.
+ * Join key shared between wavebird and an SSP for a slot.
  */
 export type PublicJoinKey = string;
 

@@ -20,4 +20,3 @@ for (const [command, args] of commands) {
     process.exit(result.status ?? 1);
   }
 }
-

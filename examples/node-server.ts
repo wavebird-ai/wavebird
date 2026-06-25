@@ -20,7 +20,7 @@ async function main(): Promise<void> {
       decision_timeout_ms: 10_000,
       long_poll_wait_ms: 1_500,
       onError: (error) => {
-        process.stderr.write(`Wavebird SDK fail-silent error: ${String(error)}\n`);
+        process.stderr.write(`wavebird SDK fail-silent error: ${String(error)}\n`);
       },
     },
   });
@@ -39,11 +39,11 @@ async function main(): Promise<void> {
   });
 
   if (!job) {
-    process.stderr.write("Wavebird job creation returned null.\n");
+    process.stderr.write("wavebird job creation returned null.\n");
     return;
   }
   if ("retry_after_ms" in job) {
-    process.stderr.write(`Wavebird job creation was rate limited. Retry after ${job.retry_after_ms}ms.\n`);
+    process.stderr.write(`wavebird job creation was rate limited. Retry after ${job.retry_after_ms}ms.\n`);
     return;
   }
 
@@ -100,4 +100,3 @@ async function main(): Promise<void> {
 }
 
 void main();
-

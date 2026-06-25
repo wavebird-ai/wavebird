@@ -36,7 +36,7 @@ import { warnSdkDeprecation } from "./deprecation.js";
  * Configuration for the Node/server SDK client.
  */
 export type WavebirdClientOptions = {
-  /** Base URL of the CSL server. Remote targets must use HTTPS. */
+  /** Base URL of the wavebird API. Remote targets must use HTTPS. */
   baseUrl: string;
   /** Returns the wrapper API key immediately before each HTTP request. */
   getApiKey: () => string | Promise<string>;
@@ -779,7 +779,7 @@ function requestJson<T>(args: {
 }
 
 /**
- * Zero-dependency Node/server client for the CSL wrapper API.
+ * Zero-dependency Node/server client for the wavebird wrapper API.
  *
  * The client is designed for fail-silent integration: public request methods return
  * `null`, fallback values, or pending decisions instead of throwing transport errors.
@@ -924,7 +924,7 @@ export class WavebirdClient {
   }
 
   /**
-   * Creates a wrapper job in CSL.
+   * Creates a wrapper job in wavebird.
    *
    * @param params - Wrapper job request in the SDK convenience shape.
    * @returns Accepted job metadata, a typed rate-limit result, or `null` when the request failed.
@@ -1001,7 +1001,7 @@ export class WavebirdClient {
   /**
    * Reports generation lifecycle events for a job.
    *
-   * @param jobId - CSL job identifier.
+   * @param jobId - wavebird job identifier.
    * @param event - Generation event name.
    * @param request - Optional generation metadata.
    * @returns A promise that resolves after the best-effort report completes.

@@ -1,10 +1,10 @@
-# Wavebird SDK
+# wavebird SDK
 
-Wavebird is ad-tech infrastructure for AI surfaces. It connects AI apps, agents, chat products, copilots, and other generative interfaces to programmatic ad delivery while keeping the developer in control of when ads are requested, where they are rendered, and which events are reported.
+wavebird is ad-tech infrastructure for AI surfaces. It connects AI apps, agents, chat products, copilots, and other generative interfaces to programmatic ad delivery while keeping the developer in control of when ads are requested, where they are rendered, and which events are reported.
 
 The SDK is the package-level integration path for teams that want explicit control over jobs, decisions, rendering helpers, consent state, generation lifecycle events, and beacons. Showing an ad during model waiting or generation time is one supported pattern. It is not the only use case: the SDK can also support server-controlled slots, browser-controlled rendering, callback delivery, custom renderers, and typed access to the public wrapper and SSP contracts.
 
-Wavebird is data-minimizing by design. The standard ad-market path uses reduced delivery signals such as topic category, language, format, publisher metadata, consent, and placement rules. Prompts and chat history are not sent to SSPs, DSPs, advertisers, or other ad partners.
+wavebird is data-minimizing by design. The standard ad-market path uses reduced delivery signals such as topic category, language, format, publisher metadata, consent, and placement rules. Prompts and chat history are not sent to SSPs, DSPs, advertisers, or other ad partners.
 
 ## Install
 
@@ -14,9 +14,28 @@ npm install wavebird
 
 The package is ESM-only and requires Node.js 20 or newer. React rendering helpers are optional peer integrations.
 
+## Account and keys
+
+Before the SDK can call the wavebird API, create a wavebird account and project:
+
+1. Open https://wavebird.ai and choose **Get your API key**, or go directly to https://dashboard.wavebird.ai/wavebird-start.
+2. Complete onboarding with your app domain, company country, and the ad formats you want to test.
+3. Start in sandbox mode. Copy the sandbox secret key from the dashboard and keep it server-side.
+4. If you use the browser SDK, copy a publishable key and configure every allowed origin that may call wavebird, including local, staging, and production origins.
+5. Switch to live keys only after your dashboard setup shows the project is ready for production traffic.
+
+### Key types
+
+| Key | Where to use it | Environment variable | Notes |
+| --- | --- | --- | --- |
+| Sandbox secret key | Server-side SDK testing | `WAVEBIRD_SECRET_KEY=sk_test_...` | Returns sandbox decisions and does not send live SSP traffic. |
+| Publishable key | Browser SDK, React helper, DOM mount helper, or Script Tag activation | `NEXT_PUBLIC_WAVEBIRD_PUBLISHABLE_KEY=pk_...` | Browser-safe, but only from allowed origins configured in the dashboard. |
+| Live secret key | Production server traffic | `WAVEBIRD_SECRET_KEY=sk_live_...` | Use only after production readiness is approved in the dashboard. Never expose this key in browser code. |
+| API base URL | Server or browser SDK | `WAVEBIRD_BASE_URL=https://api.wavebird.ai` | Optional; the public API base is `https://api.wavebird.ai`. |
+
 ## 3-Minute Quickstart
 
-Set your Wavebird API base and server-side secret key:
+Set your wavebird API base and sandbox server-side secret key:
 
 ```bash
 WAVEBIRD_BASE_URL=https://api.wavebird.ai
@@ -47,7 +66,7 @@ const job = await client.createJob({
   job_type: "chat",
   slots_requested: 1,
   context: {
-    topic: "music education",
+    topic: "software deployment",
   },
   consent: {
     gdpr_applies: true,
@@ -96,14 +115,14 @@ if (decision?.fill === true) {
 
 ## Browser and Rendering Helpers
 
-The browser entry uses publishable keys and browser activation. Do not put secret keys in browser code.
+The browser entry uses publishable keys and browser activation. Add the exact browser origin in the dashboard before testing. Do not put secret keys in browser code.
 
 ```ts
 import { WavebirdClient } from "wavebird/browser";
 
 const browserClient = new WavebirdClient({
   baseUrl: "https://api.wavebird.ai",
-  publishableKey: "pk_test_replace_me",
+  publishableKey: process.env.NEXT_PUBLIC_WAVEBIRD_PUBLISHABLE_KEY ?? "",
   decisionDelivery: "auto",
   publisher: {
     app_name: "My AI App",
@@ -112,7 +131,7 @@ const browserClient = new WavebirdClient({
 });
 ```
 
-React and DOM rendering helpers are available when you want Wavebird to mount a returned creative:
+React and DOM rendering helpers are available when you want wavebird to mount a returned creative:
 
 ```ts
 import { WavebirdAd } from "wavebird/react";
@@ -182,7 +201,7 @@ Supported delivery modes are `auto`, `websocket`, `polling`, and `callback`. Cal
 
 ## Privacy Boundary
 
-`prompt` is optional. If you can provide a reduced topic yourself, prefer `context.topic`. If you choose to provide prompt text, Wavebird uses it only inside the Wavebird middleware path for classification and policy checks before the outbound ad-market request is built. The outbound programmatic request is based on reduced signals such as topic categories, language, publisher metadata, slot configuration, brand-safety controls, and consent. It does not include prompt text or chat history.
+`prompt` is optional. If you can provide a reduced topic yourself, prefer `context.topic`. If you choose to provide prompt text, wavebird uses it only inside the wavebird middleware path for classification and policy checks before the outbound ad-market request is built. The outbound programmatic request is based on reduced signals such as topic categories, language, publisher metadata, slot configuration, brand-safety controls, and consent. It does not include prompt text or chat history.
 
 ## Error Handling
 
@@ -203,6 +222,9 @@ const client = new WavebirdClient({
 ## Links
 
 - Website: https://wavebird.ai
+- Create account: https://dashboard.wavebird.ai/wavebird-start
+- Dashboard: https://dashboard.wavebird.ai/wavebird/overview
 - API docs: https://wavebird.ai/api
 - SDK docs: https://wavebird.ai/sdk
+- npm: https://www.npmjs.com/package/wavebird
 - Repository: https://github.com/wavebird-ai/wavebird

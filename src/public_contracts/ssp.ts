@@ -44,7 +44,7 @@ export type SspDecisionIngressContractVersion = typeof SSP_DECISION_INGRESS_CONT
 export type SspDecisionAcceptedContractVersion = typeof SSP_DECISION_ACCEPTED_CONTRACT_VERSION;
 
 /**
- * Slot signal payload sent from CSL to an SSP.
+ * Slot signal payload sent from wavebird to an SSP.
  */
 export type CslSspSlotSignalV1 = {
   contract_version: SspSlotSignalContractVersion;
@@ -133,7 +133,7 @@ export type CslSspDecisionIngressV1 = {
 };
 
 /**
- * Acknowledgement returned after CSL accepts an SSP decision ingress request.
+ * Acknowledgement returned after wavebird accepts an SSP decision ingress request.
  */
 export type CslSspDecisionAcceptedV1 = {
   contract_version: SspDecisionAcceptedContractVersion;

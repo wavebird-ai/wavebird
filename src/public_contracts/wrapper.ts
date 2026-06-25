@@ -66,7 +66,7 @@ export type CslWrapperPromptV1 = {
 };
 
 /**
- * Optional wrapper context identifiers forwarded to CSL.
+ * Optional wrapper context identifiers forwarded to wavebird.
  */
 export type CslWrapperContextV1 = {
   client_id?: string;

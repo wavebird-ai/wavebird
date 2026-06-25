@@ -65,7 +65,7 @@ async function main(): Promise<void> {
 
   const body = (await response.json()) as AnthropicMessagesResponse | Record<string, unknown>;
   if (!response.ok) {
-    process.stderr.write(`Wavebird proxy request failed with ${response.status}\n`);
+    process.stderr.write(`wavebird proxy request failed with ${response.status}\n`);
     process.stderr.write(`${JSON.stringify(body, null, 2)}\n`);
     process.exitCode = 1;
     return;
@@ -87,4 +87,3 @@ void main().catch((error) => {
   process.stderr.write(`proxy-anthropic-server failed: ${String(error)}\n`);
   process.exitCode = 1;
 });
-

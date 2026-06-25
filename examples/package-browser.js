@@ -27,4 +27,3 @@ if (job?.slot_ids[0]) {
   const decision = await client.getDecision(job.slot_ids[0]);
   console.log(decision);
 }
-
