@@ -2,26 +2,35 @@
   "name": "wavebird",
   "private": false,
   "type": "module",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "sideEffects": false,
   "license": "MIT",
   "description": "TypeScript SDK for requesting, rendering, and tracking ads on AI surfaces with wavebird.",
   "keywords": [
     "wavebird",
-    "advertising",
-    "ads",
+    "ai",
+    "llm",
+    "sdk",
+    "typescript",
+    "inference",
+    "chatbot",
+    "copilot",
+    "agent",
     "ai ads",
+    "ai advertising",
+    "llm ads",
     "llm monetization",
-    "genai",
-    "genai advertising",
-    "genai ads",
+    "ai monetization",
+    "chat monetization",
+    "agent monetization",
+    "contextual ads",
+    "sponsored generation",
+    "compute sponsoring",
     "compute-sponsoring",
     "ad sdk",
-    "ad-api",
+    "programmatic ads",
     "openrtb",
-    "ai monetization",
-    "monetization",
-    "llm"
+    "publisher monetization"
   ],
   "publishConfig": {
     "access": "public"
@@ -33,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/wavebird-ai/wavebird/issues"
   },
-  "homepage": "https://github.com/wavebird-ai/wavebird#readme",
+  "homepage": "https://wavebird.ai/sdk",
   "engines": {
     "node": ">=20.0.0"
   },

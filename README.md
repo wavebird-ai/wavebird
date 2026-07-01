@@ -1,18 +1,93 @@
 # wavebird SDK
 
-wavebird is ad-tech infrastructure for AI surfaces. It connects AI apps, agents, chat products, copilots, and other generative interfaces to programmatic ad delivery while keeping the developer in control of when ads are requested, where they are rendered, and which events are reported.
+[![npm version](https://img.shields.io/npm/v/wavebird.svg)](https://www.npmjs.com/package/wavebird)
+[![license](https://img.shields.io/npm/l/wavebird.svg)](https://github.com/wavebird-ai/wavebird/blob/main/LICENSE)
+[![weekly downloads](https://img.shields.io/npm/dw/wavebird.svg)](https://www.npmjs.com/package/wavebird)
+[![TypeScript](https://img.shields.io/badge/TypeScript-types-3178c6.svg)](https://www.npmjs.com/package/wavebird)
+[![package size](https://img.shields.io/bundlephobia/minzip/wavebird.svg)](https://bundlephobia.com/package/wavebird)
 
-The SDK is the package-level integration path for teams that want explicit control over jobs, decisions, rendering helpers, consent state, generation lifecycle events, and beacons. Showing an ad during model waiting or generation time is one supported pattern. It is not the only use case: the SDK can also support server-controlled slots, browser-controlled rendering, callback delivery, custom renderers, and typed access to the public wrapper and SSP contracts.
+Monetize AI apps, chat products, agents, copilots, and other generative
+interfaces with contextual sponsored placements. wavebird keeps the developer in
+control of when ads are requested, where they render, and which events are
+reported, without sending prompts or chat history to ad partners.
 
-wavebird is data-minimizing by design. The standard ad-market path uses reduced delivery signals such as topic category, language, format, publisher metadata, consent, and placement rules. Prompts and chat history are not sent to SSPs, DSPs, advertisers, or other ad partners.
+![Wavebird sponsored banner inside an AI chat surface](https://wavebird.ai/formats/banner_format_poster.jpg)
 
-## Install
+## 30-Second Server Smoke
 
 ```bash
 npm install wavebird
 ```
 
-The package is ESM-only and requires Node.js 20 or newer. React rendering helpers are optional peer integrations.
+```ts
+import { WavebirdClient } from "wavebird";
+
+const client = new WavebirdClient({
+  baseUrl: "https://api.wavebird.ai",
+  getApiKey: () => process.env.WAVEBIRD_SECRET_KEY ?? "",
+  decisionDelivery: "polling",
+  publisher: {
+    app_name: "My AI App",
+    app_domain: "example.com",
+  },
+});
+
+const job = await client.createJob({
+  job_type: "chat",
+  slots_requested: 1,
+  context: { topic: "software deployment" },
+  consent: {
+    gdpr_applies: false,
+    semantic_targeting: false,
+    prompt_shared: false,
+  },
+  slot_config: {
+    allowed_formats: ["banner", "native"],
+    position_hint: "below",
+    max_width: 728,
+    max_height: 90,
+  },
+});
+
+const slotId = job?.slot_ids[0];
+const decision = slotId ? await client.getDecision(slotId) : null;
+
+if (decision?.fill === true) {
+  console.log(decision.creative.url);
+}
+```
+
+The package is ESM-only, includes TypeScript definitions, and requires Node.js
+20 or newer. React rendering helpers are optional peer integrations.
+
+## Visual Examples
+
+- [Banner placement demo](https://wavebird.ai/formats/wavebird-web-banner.webm)
+- [Native placement demo](https://wavebird.ai/formats/wavebird-web-native.webm)
+- [SDK documentation](https://wavebird.ai/sdk)
+
+The linked examples show SDK-rendered ad surfaces only. They are not claims about
+production fill rates or revenue.
+
+## Try It Live
+
+- [Open the browser example on StackBlitz](https://stackblitz.com/github/wavebird-ai/wavebird?file=examples%2Fbrowser-chat.html)
+- [Open the browser example on CodeSandbox](https://codesandbox.io/p/github/wavebird-ai/wavebird/main?file=%2Fexamples%2Fbrowser-chat.html)
+- [Read the full SDK guide](https://wavebird.ai/sdk)
+
+## What You Control
+
+The SDK is the package-level integration path for teams that want explicit
+control over jobs, decisions, rendering helpers, consent state, generation
+lifecycle events, and beacons. Showing an ad during model waiting or generation
+time is one supported pattern. The SDK can also support server-controlled slots,
+browser-controlled rendering, callback delivery, custom renderers, and typed
+access to the public wrapper and SSP contracts.
+
+wavebird is data-minimizing by design. The standard ad-market path uses reduced
+delivery signals such as topic category, language, format, publisher metadata,
+consent, and placement rules. Prompts and chat history are not sent to SSPs,
+DSPs, advertisers, or other ad partners.
 
 ## Account and keys
 

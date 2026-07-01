@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-07-01
+
+### Changed
+- Updated npm discovery metadata with generic AI, monetization, ad-tech, and
+  TypeScript SDK keywords.
+- Pointed the package homepage to `https://wavebird.ai/sdk`.
+- Reworked the README opening into a conversion-oriented package page with
+  badges, a compact server-side quickstart, hosted visual examples, and live
+  demo links.
+- Documented hosted media examples without adding image or video files to the
+  npm package payload.
+- No runtime code, public exports, public types, auth behavior, network
+  behavior, or SDK method semantics changed in this release.
+
 ### Deprecated
 - `wavebird` is now positioned as an advanced compatibility layer. For
   most integrations, wavebird now recommends the Script Tag at
