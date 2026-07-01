@@ -11,7 +11,7 @@ interfaces with contextual sponsored placements. wavebird keeps the developer in
 control of when ads are requested, where they render, and which events are
 reported, without sending prompts or chat history to ad partners.
 
-![Wavebird sponsored banner inside an AI chat surface](https://wavebird.ai/formats/banner_format_poster.jpg)
+![Wavebird sponsored banner inside an AI chat surface](https://raw.githubusercontent.com/wavebird-ai/wavebird/main/media/wavebird-banner-chat-ad.jpg)
 
 ## 30-Second Server Smoke
 
