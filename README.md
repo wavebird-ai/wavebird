@@ -4,7 +4,6 @@
 [![license](https://img.shields.io/npm/l/wavebird.svg)](https://github.com/wavebird-ai/wavebird/blob/main/LICENSE)
 [![weekly downloads](https://img.shields.io/npm/dw/wavebird.svg)](https://www.npmjs.com/package/wavebird)
 [![TypeScript](https://img.shields.io/badge/TypeScript-types-3178c6.svg)](https://www.npmjs.com/package/wavebird)
-[![package size](https://img.shields.io/bundlephobia/minzip/wavebird.svg)](https://bundlephobia.com/package/wavebird)
 
 Monetize AI apps, chat products, agents, copilots, and other generative
 interfaces with contextual sponsored placements. wavebird keeps the developer in
