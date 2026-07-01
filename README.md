@@ -61,8 +61,9 @@ The package is ESM-only, includes TypeScript definitions, and requires Node.js
 
 ## Visual Examples
 
-- [Banner placement demo](https://wavebird.ai/formats/wavebird-web-banner.webm)
-- [Native placement demo](https://wavebird.ai/formats/wavebird-web-native.webm)
+- [Banner placement demo](https://raw.githubusercontent.com/wavebird-ai/wavebird/main/media/wavebird-web-banner.webm)
+- [Clip placement demo](https://raw.githubusercontent.com/wavebird-ai/wavebird/main/media/wavebird-web-clip.webm)
+- [Native placement demo](https://raw.githubusercontent.com/wavebird-ai/wavebird/main/media/wavebird-web-native.webm)
 - [SDK documentation](https://wavebird.ai/sdk)
 
 The linked examples show SDK-rendered ad surfaces only. They are not claims about
